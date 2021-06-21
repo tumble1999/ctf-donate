@@ -73,3 +73,8 @@ ranges.forEach(r => {
 	r.addEventListener("input", update.bind(this, r));
 });
 setMax(1);
+document.getElementById("amount").value = max;
+
+document.getElementById("amount").addEventListener("input", () => {
+	setMax(document.getElementById("amount").value);
+});
