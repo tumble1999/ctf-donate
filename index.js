@@ -5,7 +5,12 @@ let ranges = Array.from(document.querySelectorAll("[id^=ctf-range]")),
 	max = 100,
 	update = range => {
 		let stop = ranges.reduce((max, r) => r.id == range.id ? max : max - r.value, max);
-		if (range.value > stop) range.value = stop;
+		if (range.value > stop) {
+			//range.value = stop;
+			let dif = (range.value - stop) / (ranges.length - 1),
+				sum = max - stop;
+			ranges.forEach(r => r.id != range.id && (r.value -= r.value / sum * dif));
+		}
 	};
 
 ranges.forEach(r => {
