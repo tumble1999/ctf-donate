@@ -9,6 +9,7 @@ let ranges = Array.from(document.querySelectorAll("[id^=ctf-range]")),
 	};
 
 ranges.forEach(r => {
+	r.value = max / ranges.length;
 	r.max = max;
 	update(r);
 	r.addEventListener("input", update.bind(this, r));
