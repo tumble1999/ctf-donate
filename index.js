@@ -6,14 +6,14 @@ let ranges = Array.from(document.querySelectorAll(".ctf-range")),
 	max,
 	values = [],
 	getSum = () => ranges.reduce((sum, r) => sum + parseInt(r.value), 0),
-	getId = range => ranges.findIndex(r => r.name == range.name),
+	getId = range => ranges.findIndex(r => (r.id || r.name) == (range.id || range.name)),
 	update = range => {
 		let dif = max - getSum(),
 			applicableRanges = ranges.sort((a, b) => (parseInt(a.value) - parseInt(b.value)) * (dif / Math.abs(dif)))
 				//Remove all of the ons at 0 if you are taking away
 				// and the ones set at max if you are adding
 				.filter(r => dif > 0 ? parseInt(r.value) < max : r.value != "0");
-		if (range != void 0) applicableRanges = applicableRanges.filter(r => r.name != range.name);
+		if (range != void 0) applicableRanges = applicableRanges.filter(r => (r.id || r.name) != (range.id || range.name));
 		dif /= applicableRanges.length;
 		let difList = [Math.ceil(dif), Math.floor(dif)].sort((a, b) => Math.abs(b) - Math.abs(a));
 
@@ -32,7 +32,7 @@ let ranges = Array.from(document.querySelectorAll(".ctf-range")),
 				for (let i = 0; i < difList.length; i++) {
 					let dif = difList[i];
 					if ((getSum() + dif) == max || i < (difList.length - 1)) {
-						console.log(`[${i}] adding ${dif} to ${r.name}`);
+						console.log(`[${i}] adding ${dif} to ${r.id || r.name}`);
 						r.value = parseInt(r.value) + dif;
 						return;
 					}
@@ -51,6 +51,7 @@ let ranges = Array.from(document.querySelectorAll(".ctf-range")),
 		//console.log({ sum, v, vSmall, vBig, max });
 
 		ranges.forEach(r => {
+			r.id = r.id || r.name;
 			//console.log(`(${sum} + ${vBig}) <= ${max}: ${(sum + vBig) <= max}`);
 			//console.log(`(${sum} + ${vSmall}) <= ${max}: ${(sum + vSmall) <= max}`);
 			if ((sum + vBig) <= max) {
