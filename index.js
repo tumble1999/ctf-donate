@@ -9,7 +9,11 @@ let ranges = Array.from(document.querySelectorAll("[id^=ctf-range]")),
 			//range.value = stop;
 			let dif = (range.value - stop) / (ranges.length - 1),
 				sum = max - stop;
-			ranges.forEach(r => r.id != range.id && (r.value -= r.value / sum * dif));
+			//Move based on sizes
+			//ranges.forEach(r => r.id != range.id && (r.value -= r.value / sum * dif));
+
+			//Move evely
+			ranges.forEach(r => r.id != range.id && (r.value -= dif));
 		}
 	};
 
