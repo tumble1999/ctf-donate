@@ -1,6 +1,6 @@
 repository: tumble1999/ctf-donate 
 
-excludes:
+exclude:
   - lib
   - Gemfile
   - Gemfile.lock
